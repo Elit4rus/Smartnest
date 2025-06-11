@@ -1,0 +1,172 @@
+﻿<Window x:Class="Smartnest.View.Windows.Admin.ChangeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Smartnest.View.Windows.Admin"
+        mc:Ignorable="d"
+        Title="Окно изменения заявки" Height="744" Width="1420" WindowStartupLocation="CenterScreen" AllowsTransparency="True" ResizeMode="NoResize" BorderBrush="Transparent" Background="Transparent" BorderThickness="0" WindowStyle="None">
+    <Window.Resources>
+        <!-- Стиль для кнопки -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <!-- Общие настройки для кнопки -->
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <!-- Обычный цвет текста -->
+            <Setter Property="BorderBrush" Value="#65D4D0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <!-- Прозрачный фон по умолчанию -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Изменение при наведении -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#65D4D0"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="10" BorderThickness="2" BorderBrush="Black" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="640"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="640"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="ФИО"/>
+                    <Border Grid.Row="2" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+                        <ContentPresenter>
+                            <ContentPresenter.Content>
+                                <TextBox Margin="10 0 10 0"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+
+                    <TextBlock Grid.Row="4" Text="Телефон"/>
+                    <Border Grid.Row="6" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+                        <ContentPresenter>
+                            <ContentPresenter.Content>
+                                <TextBox Margin="10 0 10 0"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+
+                    <TextBlock Grid.Row="8" Text="Площадь (кв. м)"/>
+                    <Border Grid.Row="10" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+                        <ContentPresenter>
+                            <ContentPresenter.Content>
+                                <TextBox Margin="10 0 10 0"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+
+                    <TextBlock Text="Область" Grid.Row="12"/>
+                    <Border Grid.Row="14" BorderBrush="#65D4D0" BorderThickness="2" CornerRadius="3">
+                        <StackPanel Margin="20 20 20 0">
+                            <WrapPanel Orientation="Horizontal">
+                                <CheckBox Content="Кухня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox Content="Коридор" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox Content="Гостиная" VerticalContentAlignment="Center" Margin="0 0 52 20"/>
+                                <CheckBox Content="Студия" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+
+                                <CheckBox Content="Ванная" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
+                                <CheckBox Content="Туалет" VerticalContentAlignment="Center" Margin="0 0 85 20"/>
+                                <CheckBox Content="Спальня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox Content="Подвал" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+
+                                <CheckBox Content="Балкон" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
+                                <CheckBox Content="Гардеробная" VerticalContentAlignment="Center" Margin="0 0 13 20"/>
+                                <CheckBox Content="Двор" VerticalContentAlignment="Center" Margin="0 0 93 20"/>
+                                <CheckBox Content="Крыша" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="20"/>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Оборудование"/>
+                    <Border Grid.Row="2" BorderBrush="#65D4D0" BorderThickness="2" CornerRadius="3">
+                        <StackPanel Margin="20 20 20 0">
+                            <CheckBox Content="Видеонаблюдение" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox Content="Система безопасности" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox Content="Контроль протечки воды" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox Content="Управление шторами" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox Content="Управление освещением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox Content="Управление отоплением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="Дополнительные сведения" Grid.Row="4"/>
+                    <Border Height="144" Grid.Row="6" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+                        <ContentPresenter>
+                            <ContentPresenter.Content>
+                                <TextBox Height="130" Margin="5 0 5 0" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" AcceptsReturn="True"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button  Height="60" Name="ChangeBtn" Style="{StaticResource ButtonStyle}" Width="220" Content="Изменить" Margin="0 0 100 0"/>
+                    <Button  Height="60" Name="CloseBtn" Style="{StaticResource ButtonStyle}" Click="CloseBtn_Click" Width="220" Content="Назад"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

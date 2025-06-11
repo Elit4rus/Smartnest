@@ -1,0 +1,371 @@
+﻿<Window x:Class="Smartnest.View.Windows.Client.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Smartnest.View.Windows.Client"
+        mc:Ignorable="d"
+        Title="Главное меню" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized">
+    <Window.Resources>
+        <!-- Стиль для кнопки -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <!-- Общие настройки для кнопки -->
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <!-- Обычный цвет текста -->
+            <Setter Property="BorderBrush" Value="#65D4D0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <!-- Прозрачный фон по умолчанию -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Изменение при наведении -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#65D4D0"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для кнопки -->
+        <Style x:Key="MoreInfoBtnStyle" TargetType="Button">
+            <!-- Общие настройки для кнопки -->
+            <Setter Property="Foreground" Value="White"/>
+            <!-- Обычный цвет текста -->
+            <Setter Property="BorderBrush" Value="#65D4D0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <!-- Прозрачный фон по умолчанию -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Изменение при наведении -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#65D4D0"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="SMARTNEST" Foreground="#6C6C6C" FontWeight="SemiBold" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="УМНЫЙ ДОМ ПОД КЛЮЧ" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                <Image Height="20" Source="/Resources/Icon/Triangle.png" Grid.Row="1" VerticalAlignment="Top" Margin="320 3 0 0"/>
+            </Grid>
+            <Button x:Name="ExitBtn" Click="ExitBtn_Click" Grid.Column="2" Content="Выйти" Style="{StaticResource ButtonStyle}" Width="150" Height="50" HorizontalAlignment="Right" Margin="0 0 20 0"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Моторный Степан"/>
+                    <Border BorderBrush="#65D4D0" BorderThickness="1" Width="auto" HorizontalAlignment="Stretch"  Height="2" CornerRadius="1" Margin="0 30 0 0"/>
+                </Grid>
+                <Image Source="/Resources/Logo/Profile.png" HorizontalAlignment="Left" Margin="50 40 0 40"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderThickness="1" BorderBrush="#65D4D0"/>
+            <Border Grid.Column="4" BorderThickness="1" BorderBrush="#65D4D0"/>
+            <!--Иконки услуг-->
+            <Grid Grid.Column="2" Margin="20 0 20 0">
+                <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="0 60 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="550" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="550" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="550" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--Система безопасности-->
+                    <Image Source="/Resources/Menu/Image 3.png" />
+                    <Grid Margin="0 20 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Система безопасности" Foreground="White" HorizontalAlignment="Center" Grid.Column="1" FontWeight="SemiBold" FontSize="26"/>
+                        <TextBlock Text="Обеспечивает жизненно необходимые в различных ситуациях действия - включение системы пожаротушения, перекрытие подачи газа и воды, включение системы вентиляции. Системы... "
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   FontSize="24"/>
+
+                        <Button Name="SecuritySystemWindowBtn"
+                                Click="SecuritySystemWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+
+                    <!--Видеонаблюдение-->
+                    <Image Source="/Resources/Menu/Image 1.png" Grid.Column="2"/>
+                    <Grid Margin="0 20 0 20" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Видеонаблюдение"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontWeight="SemiBold" FontSize="26"/>
+
+                        <TextBlock Text="Оказываем комплексные решения по проводному и беспроводному видеонаблюдению. От подбора оборудования под ваши задачи, до монтажа и настройки системы под..."
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   HorizontalAlignment="Left"
+                                   FontSize="24"/>
+
+                        <Button Name="VideoSurveillanceWindowBtn"
+                                Click="VideoSurveillanceWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+
+                    <!--Контроль протечки воды-->
+                    <Image Source="/Resources/Menu/Image 2.png" Grid.Column="4"/>
+                    <Grid Grid.Column="4" Margin="0 20 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Контроль протечки воды"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontSize="26"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Контроль протечки воды автоматически блокирует подачу холодной и горячей воды и предотвращает потоп. Интегрируется в уже установленную систему водоснабжения контроль..."
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   HorizontalAlignment="Left"
+                                   FontSize="24"/>
+
+                        <Button Name="WaterLeakageControlWindowBtn"
+                                Click="WaterLeakageControlWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+                    
+                    <!--Управление шторами-->
+                    <Image Source="/Resources/Menu/Image 4.png" Grid.Row="2"/>
+                    <Grid Grid.Column="0" Grid.Row="2" Margin="0 20 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Управление шторами"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontSize="26"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Управлять шторами и другими солнцезащитными системами дистанционно из  любого места через приложение, голосом или через запланированный сценарий управления шторами..."
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   HorizontalAlignment="Left"
+                                   FontSize="24"/>
+
+                        <Button Name="CurtainControlWindowBtn"
+                                Click="CurtainControlWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+
+                    <!--Управление освещением-->
+                    <Image Source="/Resources/Menu/Image 5.png" Grid.Row="2" Grid.Column="2"/>
+                    <Grid Grid.Column="2" Grid.Row="2" Margin="0 20 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Управление освещением"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontSize="26"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Управлять дистанционно освещением из любого места голосом, через смартфон. Также возможно управление освещением по датчику движения, по событиям и расписанию... "
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   HorizontalAlignment="Left"
+                                   FontSize="24"/>
+
+                        <Button Name="ControlLightingWindowBtn"
+                                Click="ControlLightingWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+
+                    <!--Управление отоплением-->
+                    <Image Source="/Resources/Menu/Image 6.png" Grid.Column="4" Grid.Row="2"/>
+                    <Grid Grid.Column="4" Grid.Row="2" Margin="0 20 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Управление отоплением"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontSize="26"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Управляйте удаленно котлом и климатическими системами из любой точки мира. Производится через управление термостатами на радиаторах отопления, конвекторами и..."
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   HorizontalAlignment="Left"
+                                   FontSize="24"/>
+
+                        <Button Name="ManageHeatingWindowBtn"
+                                Click="ManageHeatingWindowBtn_Click"
+                                Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="40"
+                                Width="170"
+                                Content="Подробнее"
+                                Style="{StaticResource MoreInfoBtnStyle}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Frame Grid.Column="2" x:Name="ClientFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Window>
