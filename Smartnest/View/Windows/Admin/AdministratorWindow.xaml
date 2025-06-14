@@ -59,7 +59,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Моторный Степан"/>
+                    <TextBlock x:Name="CurrentFullnameTbl" Text="Моторный Степан"/>
                     <Border BorderBrush="#65D4D0" BorderThickness="1" Width="auto" HorizontalAlignment="Stretch"  Height="2" CornerRadius="1" Margin="0 30 0 0"/>
                 </Grid>
                 <Image Source="/Resources/Logo/Profile.png" HorizontalAlignment="Left" Margin="50 40 0 40"/>
@@ -77,16 +77,17 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Border Background="#65D4D0" Width="auto" Padding="20 0 20 0" HorizontalAlignment="Left" CornerRadius="4 4 0 0">
-                    <TextBlock Text="Таблица учёта клиентов" Foreground="White" FontWeight="SemiBold"/>
+                    <TextBlock Text="Таблица учёта заявок" Foreground="White" FontWeight="SemiBold"/>
                 </Border>
-                <ListView FontSize="24" Grid.Row="2">
+                <ListView x:Name="ApplicationLv" FontSize="24" Grid.Row="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="ФИО"/>
-                            <GridViewColumn Header="Телефон"/>
-                            <GridViewColumn Header="Услуги"/>
-                            <GridViewColumn Header="Комната"/>
-                            <GridViewColumn Header="Квадратура"/>
+                            <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="200"/>
+                            <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="120"/>
+                            <GridViewColumn Header="Услуги" DisplayMemberBinding="{Binding Areas}" Width="200"/>
+                            <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="200"/>
+                            <GridViewColumn Header="Квадратура" DisplayMemberBinding="{Binding ApartmentArea}" Width="100"/>
+                            <GridViewColumn Header="Комментарий" DisplayMemberBinding="{Binding Comment}" Width="300"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

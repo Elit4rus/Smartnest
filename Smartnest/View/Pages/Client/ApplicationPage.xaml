@@ -86,16 +86,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="20"/>
 
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="20"/>
-
+                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="50"/>
@@ -104,54 +96,35 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="ФИО"/>
-                    <Border Grid.Row="2" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+                    <TextBlock Grid.Row="1" Text="Площадь (кв. м)"/>
+                    <Border Grid.Row="3" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
                         <ContentPresenter>
                             <ContentPresenter.Content>
-                                <TextBox Margin="10 0 10 0"/>
+                                <TextBox x:Name="AreaTb" Margin="10 0 10 0"/>
                             </ContentPresenter.Content>
                         </ContentPresenter>
                     </Border>
 
-                    <TextBlock Grid.Row="4" Text="Телефон"/>
-                    <Border Grid.Row="6" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
-                        <ContentPresenter>
-                            <ContentPresenter.Content>
-                                <TextBox Margin="10 0 10 0"/>
-                            </ContentPresenter.Content>
-                        </ContentPresenter>
-                    </Border>
-
-                    <TextBlock Grid.Row="8" Text="Площадь (кв. м)"/>
-                    <Border Grid.Row="10" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
-                        <ContentPresenter>
-                            <ContentPresenter.Content>
-                                <TextBox Margin="10 0 10 0"/>
-                            </ContentPresenter.Content>
-                        </ContentPresenter>
-                    </Border>
-
-                    <TextBlock Text="Область" Grid.Row="12"/>
-                    <Border Grid.Row="14" BorderBrush="#65D4D0" BorderThickness="2" CornerRadius="3">
+                    <TextBlock Text="Область" Grid.Row="5"/>
+                    <Border Grid.Row="7" BorderBrush="#65D4D0" BorderThickness="2" CornerRadius="3">
                         <StackPanel Margin="20 20 20 0">
                             <WrapPanel Orientation="Horizontal">
-                                <CheckBox Content="Кухня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
-                                <CheckBox Content="Коридор" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
-                                <CheckBox Content="Гостиная" VerticalContentAlignment="Center" Margin="0 0 52 20"/>
-                                <CheckBox Content="Студия" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+                                <CheckBox x:Name="KitchenCb" Content="Кухня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox x:Name="HallwayCb" Content="Коридор" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox x:Name="LivingRoomCb" Content="Гостиная" VerticalContentAlignment="Center" Margin="0 0 52 20"/>
+                                <CheckBox x:Name="AtelierCb" Content="Студия" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+                                <CheckBox x:Name="BathroomCb" Content="Ванная" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
+                                <CheckBox x:Name="ToiletCb" Content="Туалет" VerticalContentAlignment="Center" Margin="0 0 85 20"/>
+                                <CheckBox x:Name="BedroomCb" Content="Спальня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
+                                <CheckBox x:Name="BasementCb" Content="Подвал" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
 
-                                <CheckBox Content="Ванная" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
-                                <CheckBox Content="Туалет" VerticalContentAlignment="Center" Margin="0 0 85 20"/>
-                                <CheckBox Content="Спальня" VerticalContentAlignment="Center" Margin="0 0 60 20"/>
-                                <CheckBox Content="Подвал" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
-
-                                <CheckBox Content="Балкон" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
-                                <CheckBox Content="Гардеробная" VerticalContentAlignment="Center" Margin="0 0 13 20"/>
-                                <CheckBox Content="Двор" VerticalContentAlignment="Center" Margin="0 0 93 20"/>
-                                <CheckBox Content="Крыша" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
+                                <CheckBox x:Name="BalconyCb" Content="Балкон" VerticalContentAlignment="Center" Margin="0 0 45 20"/>
+                                <CheckBox x:Name="DressingRoomCb" Content="Гардеробная" VerticalContentAlignment="Center" Margin="0 0 13 20"/>
+                                <CheckBox x:Name="YardCb" Content="Двор" VerticalContentAlignment="Center" Margin="0 0 93 20"/>
+                                <CheckBox x:Name="RoofCb" Content="Крыша" VerticalContentAlignment="Center" Margin="0 0 0 20"/>
                             </WrapPanel>
                         </StackPanel>
                     </Border>
@@ -171,12 +144,12 @@
                     <TextBlock Text="Оборудование"/>
                     <Border Grid.Row="2" BorderBrush="#65D4D0" BorderThickness="2" CornerRadius="3">
                         <StackPanel Margin="20 20 20 0">
-                            <CheckBox Content="Видеонаблюдение" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
-                            <CheckBox Content="Система безопасности" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
-                            <CheckBox Content="Контроль протечки воды" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
-                            <CheckBox Content="Управление шторами" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
-                            <CheckBox Content="Управление освещением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
-                            <CheckBox Content="Управление отоплением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="CameraCb" Content="Видеонаблюдение" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="SecurityCb" Content="Система безопасности" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="WaterCb" Content="Контроль протечки воды" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="CurtainCb" Content="Управление шторами" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="LightCb" Content="Управление освещением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
+                            <CheckBox x:Name="HeatingCb" Content="Управление отоплением" VerticalContentAlignment="Center" Margin="0 0 0 15"/>
                         </StackPanel>
                     </Border>
 
@@ -184,7 +157,7 @@
                     <Border Height="144" Grid.Row="6" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
                         <ContentPresenter>
                             <ContentPresenter.Content>
-                                <TextBox Height="130" Margin="5 0 5 0" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" AcceptsReturn="True"/>
+                                <TextBox x:Name="CommentTb" Height="130" Margin="5 0 5 0" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" AcceptsReturn="True"/>
                             </ContentPresenter.Content>
                         </ContentPresenter>
                     </Border>
@@ -197,7 +170,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button  Height="60" Name="ChangeBtn" Style="{StaticResource ButtonStyle}" Width="220" Content="Оставить заявку"/>
+                    <Button  Height="60" Name="CreateBtn" Style="{StaticResource ButtonStyle}"  Click="CreateBtn_Click" Width="220" Content="Оставить заявку"/>
                 </StackPanel>
             </Grid>
         </Grid>

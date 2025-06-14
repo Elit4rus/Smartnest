@@ -61,11 +61,11 @@
         </Grid.RowDefinitions>
         <Image Source="/Resources/Logo/Logo.png" Grid.Column="1" Grid.Row="1"/>
         
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="Логин"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="Номер телефона"/>
         <Border Grid.Row="5" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="PhoneTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>
@@ -74,7 +74,7 @@
         <Border Grid.Row="9" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="PasswordTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>

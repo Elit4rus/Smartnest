@@ -94,7 +94,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Моторный Степан"/>
+                    <TextBlock x:Name="CurrentFullnameTbl"/>
                     <Border BorderBrush="#65D4D0" BorderThickness="1" Width="auto" HorizontalAlignment="Stretch"  Height="2" CornerRadius="1" Margin="0 30 0 0"/>
                 </Grid>
                 <Image Source="/Resources/Logo/Profile.png" HorizontalAlignment="Left" Margin="50 40 0 40"/>

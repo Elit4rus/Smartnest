@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smartnest.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +12,8 @@ namespace Smartnest
     /// <summary>
     /// Логика взаимодействия для App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
+        public static SmartnestEntities context = new SmartnestEntities();
     }
 }

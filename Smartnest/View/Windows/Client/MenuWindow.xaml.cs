@@ -12,6 +12,8 @@ namespace Smartnest.View.Windows.Client
         {
             InitializeComponent();
             FrameHelper.clientFrame = ClientFrame;
+
+            CurrentFullnameTbl.Text = AuthorizationHelper.currentUser.Surname + " " + AuthorizationHelper.currentUser.Name;
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)

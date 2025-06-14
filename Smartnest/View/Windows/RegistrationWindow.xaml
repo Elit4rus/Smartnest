@@ -43,8 +43,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
-            <RowDefinition Height="300" />
+            <RowDefinition Height="150" />
             <RowDefinition Height="60" />
+
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="20" />
 
             <RowDefinition Height="auto" />
             <RowDefinition Height="5" />
@@ -75,47 +80,56 @@
         </Grid.RowDefinitions>
 
         <Image Source="/Resources/Logo/Logo.png" Grid.Column="1" Grid.Row="1"/>
-        
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="Имя"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="Фамилия"/>
         <Border Grid.Row="5" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="SurnameTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>
 
-        <TextBlock Grid.Row="7" Grid.Column="1" Text="Фамилия"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="Имя"/>
         <Border Grid.Row="9" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="NameTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>
 
-        <TextBlock Grid.Row="11" Grid.Column="1" Text="Телефон"/>
+        <TextBlock Grid.Row="11" Grid.Column="1" Text="Отчество"/>
         <Border Grid.Row="13" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="PatronymicTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>
 
-        <TextBlock Grid.Row="15" Grid.Column="1" Text="Пароль"/>
+        <TextBlock Grid.Row="15" Grid.Column="1" Text="Телефон"/>
         <Border Grid.Row="17" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
             <ContentPresenter>
                 <ContentPresenter.Content>
-                    <TextBox Margin="10 0 10 0"/>
+                    <TextBox x:Name="PhoneTb" Margin="10 0 10 0"/>
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Border>
 
-        <Button Style="{StaticResource ButtonStyle}" Grid.Column="1" Grid.Row="19" Content="Зарегистрироваться" Width="300" FontWeight="SemiBold" Height="55"/>
+        <TextBlock Grid.Row="19" Grid.Column="1" Text="Пароль"/>
+        <Border Grid.Row="21" Grid.Column="1" BorderBrush="#65D4D0" CornerRadius="3" BorderThickness="2">
+            <ContentPresenter>
+                <ContentPresenter.Content>
+                    <TextBox x:Name="PasswordTb" Margin="10 0 10 0"/>
+                </ContentPresenter.Content>
+            </ContentPresenter>
+        </Border>
 
-        <TextBlock Grid.Row="21" Text="Уже есть аккаунт?" Grid.Column="1" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="22" Grid.Column="1" HorizontalAlignment="Center">
+        <Button x:Name="RegBtn" Click="RegBtn_Click" Style="{StaticResource ButtonStyle}" Grid.Column="1" Grid.Row="24" Content="Зарегистрироваться" Width="300" FontWeight="SemiBold" Height="55"/>
+
+        <TextBlock Grid.Row="26" Text="Уже есть аккаунт?" Grid.Column="1" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="27" Grid.Column="1" HorizontalAlignment="Center">
             <Hyperlink Name="LoginHp" Click="LoginHp_Click">Войти</Hyperlink>
         </TextBlock>
     </Grid>
