@@ -18,15 +18,15 @@ namespace Smartnest.Model
         {
             this.AreaApplication = new HashSet<AreaApplication>();
             this.EquipmentApplication = new HashSet<EquipmentApplication>();
-            this.UserApplication = new HashSet<UserApplication>();
         }
     
         public int ID { get; set; }
         public string ApartmentArea { get; set; }
         public string Comment { get; set; }
+        public Nullable<int> UserID { get; set; }
     
+        public virtual User User { get; set; }
         public virtual ICollection<AreaApplication> AreaApplication { get; set; }
         public virtual ICollection<EquipmentApplication> EquipmentApplication { get; set; }
-        public virtual ICollection<UserApplication> UserApplication { get; set; }
     }
 }

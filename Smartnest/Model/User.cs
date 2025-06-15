@@ -16,7 +16,7 @@ namespace Smartnest.Model
     {
         public User()
         {
-            this.UserApplication = new HashSet<UserApplication>();
+            this.Application = new HashSet<Application>();
         }
     
         public int ID { get; set; }
@@ -27,7 +27,7 @@ namespace Smartnest.Model
         public int RoleID { get; set; }
         public string Password { get; set; }
     
+        public virtual ICollection<Application> Application { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<UserApplication> UserApplication { get; set; }
     }
 }

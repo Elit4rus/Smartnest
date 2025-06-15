@@ -1,6 +1,4 @@
 ﻿using Smartnest.AppData;
-using Smartnest.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -12,6 +10,7 @@ namespace Smartnest.View.Windows.Admin
     /// </summary>
     public partial class AdministratorWindow : Window
     {
+        private List<ApplicationView> applications = new List<ApplicationView>();
         public AdministratorWindow()
         {
             InitializeComponent();
@@ -19,78 +18,63 @@ namespace Smartnest.View.Windows.Admin
 
             CurrentFullnameTbl.Text = AuthorizationHelper.currentUser.Surname + " " + AuthorizationHelper.currentUser.Name;
 
-            LoadApplications();
+            LoadApplications(); // Загружаем заявки при открытии окна
         }
 
         private void LoadApplications()
         {
-            try
+            applications.Clear(); // Очищаем текущий список
+
+            // Получаем все заявки из базы данных
+            var dbApplications = App.context.Application.ToList();
+
+            foreach (var app in dbApplications)
             {
-                using (var db = new SmartnestEntities())
+                // Получаем пользователя, связанного с заявкой
+                var user = App.context.User.FirstOrDefault(u => u.ID == app.UserID);
+
+                // Получаем список областей для заявки
+                var areaIds = App.context.AreaApplication
+                    .Where(aa => aa.ApplicationID == app.ID)
+                    .Select(aa => aa.AreaID)
+                    .ToList();
+
+                var areas = new List<string>();
+                foreach (var id in areaIds)
                 {
-                    var applications = new List<ApplicationViewModel>();
-
-                    // Получаем все заявки
-                    var allApplications = db.Application.ToList();
-
-                    foreach (var application in allApplications)
-                    {
-                        // Находим пользователя для этой заявки
-                        var userApp = db.UserApplication.FirstOrDefault(ua => ua.ApplicationID == application.ID);
-                        if (userApp == null) continue;
-
-                        var user = db.User.Find(userApp.UserID);
-                        if (user == null) continue;
-
-                        // Получаем названия областей
-                        var areaNames = db.AreaApplication
-                            .Where(aa => aa.ApplicationID == application.ID)
-                            .Join(db.Area,
-                                aa => aa.AreaID,
-                                a => a.ID,
-                                (aa, a) => a.Title)
-                            .ToList();
-
-                        // Получаем названия оборудования
-                        var equipmentNames = db.EquipmentApplication
-                            .Where(ea => ea.ApplicationID == application.ID)
-                            .Join(db.Equipment,
-                                ea => ea.EquipmentID,
-                                e => e.ID,
-                                (ea, e) => e.Title)
-                            .ToList();
-
-                        applications.Add(new ApplicationViewModel
-                        {
-                            ApplicationId = application.ID,
-                            FullName = $"{user.Surname} {user.Name} {user.Patronymic}".Trim(),
-                            Phone = user.Phone,
-                            Areas = string.Join(", ", areaNames),
-                            Equipment = string.Join(", ", equipmentNames),
-                            ApartmentArea = application.ApartmentArea,
-                            Comment = application.Comment
-                        });
-                    }
-
-                    ApplicationLv.ItemsSource = applications;
+                    var area = App.context.Area.FirstOrDefault(a => a.ID == id);
+                    if (area != null) areas.Add(area.Title);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки заявок: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
 
-        // Модель для отображения заявки в ListView
-        public class ApplicationViewModel
-        {
-            public int ApplicationId { get; set; }
-            public string FullName { get; set; }
-            public string Phone { get; set; }
-            public string Areas { get; set; }
-            public string Equipment { get; set; }
-            public string ApartmentArea { get; set; }
-            public string Comment { get; set; }
+                // Получаем список оборудования для заявки
+                var equipmentIds = App.context.EquipmentApplication
+                    .Where(ea => ea.ApplicationID == app.ID)
+                    .Select(ea => ea.EquipmentID)
+                    .ToList();
+
+                var equipments = new List<string>();
+                foreach (var id in equipmentIds)
+                {
+                    var equipment = App.context.Equipment.FirstOrDefault(e => e.ID == id);
+                    if (equipment != null) equipments.Add(equipment.Title);
+                }
+
+                // Создаем объект для отображения
+                applications.Add(new ApplicationView
+                {
+                    ID = app.ID,
+                    FullName = user != null ? user.GetFullName() : "Не указано",
+                    Phone = user?.Phone ?? "Не указано",
+                    Areas = string.Join(", ", areas),
+                    Equipment = string.Join(", ", equipments),
+                    ApartmentArea = app.ApartmentArea,
+                    Comment = app.Comment ?? "Без комментария"
+                });
+            }
+
+            // Устанавливаем источник данных для ListView
+            ApplicationLv.ItemsSource = applications;
+            ApplicationLv.Items.Refresh();
         }
 
         private void SendBtn_Click(object sender, RoutedEventArgs e)
@@ -100,9 +84,20 @@ namespace Smartnest.View.Windows.Admin
 
         private void ChangeBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Для редактирования необходимо выбрать заявку из списка!");
-            //ChangeWindow changeWindow = new ChangeWindow();
-            //changeWindow.ShowDialog();
+            if (ApplicationLv.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите заявку для редактирования!");
+                return;
+            }
+
+            var selectedApp = (ApplicationView)ApplicationLv.SelectedItem;
+
+            // Открываем окно редактирования с передачей выбранной заявки
+            ChangeWindow changeWindow = new ChangeWindow(selectedApp.ID);
+            changeWindow.ShowDialog();
+
+            // Обновляем список после закрытия окна редактирования
+            LoadApplications();
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)

@@ -1,16 +1,28 @@
 ﻿using Smartnest.Model;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Smartnest.AppData
 {
     public class AuthorizationHelper
     {
-        public static User currentUser;
+        public static User _currentUser;
+
+        public static User currentUser
+        {
+            get => _currentUser;
+            set
+            {
+                _currentUser = value;
+                // Обновляем контекст, чтобы избежать проблем с отслеживанием сущностей
+                if (value != null)
+                {
+                    App.context.Entry(value).State = EntityState.Detached;
+                    App.context = new SmartnestEntities();
+                }
+            }
+        }
 
         // Регистрация нового пользователя
         public static void RegisterUser(string surname, string name, string patronymic, string phone, string password)
@@ -30,7 +42,7 @@ namespace Smartnest.AppData
                 RoleID = 1, // Клиент по умолчанию
                 Password = password
             };
-            currentUser = newUser;
+            _currentUser = newUser;
             App.context.User.Add(newUser);
             App.context.SaveChanges();
         }
@@ -46,9 +58,10 @@ namespace Smartnest.AppData
             {
                 throw new Exception("Неверный номер телефона или пароль");
             }
-            currentUser = user;
+            _currentUser = user;
 
             return user;
         }
+
     }
 }

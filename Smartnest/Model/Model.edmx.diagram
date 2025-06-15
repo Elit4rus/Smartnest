@@ -4,22 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dd458147d90d464192d6b86373aa937f" Name="Diagram1">
-        <EntityTypeShape EntityType="SmartnestModel.Application" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="SmartnestModel.Area" Width="1.5" PointX="0.75" PointY="1.125" />
-        <EntityTypeShape EntityType="SmartnestModel.AreaApplication" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="SmartnestModel.Equipment" Width="1.5" PointX="0.75" PointY="7.125" />
-        <EntityTypeShape EntityType="SmartnestModel.EquipmentApplication" Width="1.5" PointX="3" PointY="3.875" />
-        <EntityTypeShape EntityType="SmartnestModel.Role" Width="1.5" PointX="1.5" PointY="13.125" />
-        <EntityTypeShape EntityType="SmartnestModel.User" Width="1.5" PointX="0.75" PointY="9.5" />
-        <EntityTypeShape EntityType="SmartnestModel.UserApplication" Width="1.5" PointX="3" PointY="6.875" />
+      <Diagram DiagramId="467740e142e747a1888c2d137720ab7d" Name="Diagram1">
+        <EntityTypeShape EntityType="SmartnestModel.Application" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="SmartnestModel.Area" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="SmartnestModel.AreaApplication" Width="1.5" PointX="7.5" PointY="0.75" />
+        <EntityTypeShape EntityType="SmartnestModel.Equipment" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="SmartnestModel.EquipmentApplication" Width="1.5" PointX="7.5" PointY="3.75" />
+        <EntityTypeShape EntityType="SmartnestModel.Role" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="SmartnestModel.User" Width="1.5" PointX="3" PointY="3.375" />
+        <AssociationConnector Association="SmartnestModel.FK_Application_User" />
         <AssociationConnector Association="SmartnestModel.FK_AreaApplication_Application" />
         <AssociationConnector Association="SmartnestModel.FK_EquipmentApplication_Application" />
-        <AssociationConnector Association="SmartnestModel.FK_UserApplication_Application" />
         <AssociationConnector Association="SmartnestModel.FK_AreaUser_Area" />
         <AssociationConnector Association="SmartnestModel.FK_EquipmentUser_Equipment" />
         <AssociationConnector Association="SmartnestModel.FK_User_Role" />
-        <AssociationConnector Association="SmartnestModel.FK_UserApplication_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

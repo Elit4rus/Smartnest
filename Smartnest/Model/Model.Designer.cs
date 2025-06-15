@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\Fedor\Source\Repos\Smartnest\Smartnest\Model\Model.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\assus\Source\Repos\Smartnest\Smartnest\Model\Model.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

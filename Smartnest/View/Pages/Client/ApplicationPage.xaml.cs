@@ -1,10 +1,10 @@
-﻿using Smartnest.Model;
-using Smartnest.View.Windows.Client;
+﻿using Smartnest.AppData;
+using Smartnest.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Application = Smartnest.Model.Application;
 
 namespace Smartnest.View.Pages.Client
 {
@@ -25,46 +25,63 @@ namespace Smartnest.View.Pages.Client
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Проверка заполнения обязательных полей
-            if (string.IsNullOrWhiteSpace(AreaTb.Text))
+            try
             {
-                MessageBox.Show("Укажите площадь помещения");
-                return;
+                // Проверка введенных данных
+                if (string.IsNullOrWhiteSpace(AreaTb.Text))
+                {
+                    MessageBox.Show("Укажите площадь помещения!");
+                    return;
+                }
+
+                // Проверка, что выбрана хотя бы одна область
+                if (!IsAnyAreaSelected())
+                {
+                    MessageBox.Show("Выберите хотя бы одну область!");
+                    return;
+                }
+
+                // Проверка, что выбрано хотя бы одно оборудование
+                if (!IsAnyEquipmentSelected())
+                {
+                    MessageBox.Show("Выберите хотя бы одно оборудование!");
+                    return;
+                }
+
+                // Создаем новую заявку
+                var newApplication = new Application
+                {
+                    ApartmentArea = AreaTb.Text,
+                    Comment = CommentTb.Text,
+                    UserID = AuthorizationHelper.currentUser?.ID // Связываем с текущим пользователем
+                };
+
+                // Добавляем заявку в базу данных
+                App.context.Application.Add(newApplication);
+                App.context.SaveChanges();
+
+                // Получаем ID только что созданной заявки
+                int applicationId = newApplication.ID;
+
+                // Добавляем выбранные области
+                AddSelectedAreas(applicationId);
+
+                // Добавляем выбранное оборудование
+                AddSelectedEquipment(applicationId);
+
+                // Сообщаем пользователю об успехе
+                MessageBox.Show("Заявка успешно создана! В ближайшее время с вами свяжется оператор для уточнения деталей");
+
+                // Возвращаемся назад
+                this.NavigationService.Content = null;
             }
-
-            // 2. Проверка, что выбрана хотя бы одна область
-            if (!IsAnyAreaChecked())
+            catch (Exception ex)
             {
-                MessageBox.Show("Выберите хотя бы одну область");
-                return;
+                MessageBox.Show($"Ошибка при создании заявки: {ex.Message}");
             }
-
-            // 3. Создание новой заявки
-            var newApplication = new Model.Application
-            {
-                ApartmentArea = AreaTb.Text,
-                Comment = CommentTb.Text
-            };
-
-            // 4. Добавление заявки в базу данных
-            App.context.Application.Add(newApplication);
-            App.context.SaveChanges(); // Сохраняем, чтобы получить ID заявки
-
-            // 5. Добавление выбранных областей
-            AddSelectedAreas(newApplication.ID);
-
-            // 6. Добавление выбранного оборудования
-            AddSelectedEquipment(newApplication.ID);
-
-            // 7. Связывание заявки с текущим пользователем
-            LinkApplicationToCurrentUser(newApplication.ID);
-
-            // 8. Сообщение об успехе и закрытие страницы
-            MessageBox.Show("Заявка успешно создана!");
-            this.NavigationService.Content = null;
         }
         // Проверка, выбрана ли хотя бы одна область
-        private bool IsAnyAreaChecked()
+        private bool IsAnyAreaSelected()
         {
             return KitchenCb.IsChecked == true ||
                    HallwayCb.IsChecked == true ||
@@ -80,84 +97,64 @@ namespace Smartnest.View.Pages.Client
                    RoofCb.IsChecked == true;
         }
 
+        // Проверка, выбрано ли хотя бы одно оборудование
+        private bool IsAnyEquipmentSelected()
+        {
+            return CameraCb.IsChecked == true ||
+                   SecurityCb.IsChecked == true ||
+                   WaterCb.IsChecked == true ||
+                   CurtainCb.IsChecked == true ||
+                   LightCb.IsChecked == true ||
+                   HeatingCb.IsChecked == true;
+        }
+
         // Добавление выбранных областей в базу данных
         private void AddSelectedAreas(int applicationId)
         {
-            // Словарь для связи чекбоксов с ID областей
-            var areaCheckboxes = new[]
+            var areaCheckBoxes = new List<CheckBox>
             {
-                (CheckBox: KitchenCb, AreaId: 1),    // Кухня
-                (CheckBox: HallwayCb, AreaId: 2),    // Коридор
-                (CheckBox: LivingRoomCb, AreaId: 3), // Гостиная
-                (CheckBox: AtelierCb, AreaId: 4),    // Студия
-                (CheckBox: BathroomCb, AreaId: 5),   // Ванная
-                (CheckBox: ToiletCb, AreaId: 6),     // Туалет
-                (CheckBox: BedroomCb, AreaId: 12),   // Спальня
-                (CheckBox: BasementCb, AreaId: 11),  // Подвал
-                (CheckBox: BalconyCb, AreaId: 9),    // Балкон
-                (CheckBox: DressingRoomCb, AreaId: 7), // Гардеробная
-                (CheckBox: YardCb, AreaId: 8),       // Двор
-                (CheckBox: RoofCb, AreaId: 10)       // Крыша
+                KitchenCb, HallwayCb, LivingRoomCb, AtelierCb,
+                BathroomCb, ToiletCb, BedroomCb, BasementCb,
+                BalconyCb, DressingRoomCb, YardCb, RoofCb
             };
 
-            foreach (var (CheckBox, AreaId) in areaCheckboxes)
+            // Сопоставляем чекбоксы с ID областей (по порядку как в базе)
+            for (int i = 0; i < areaCheckBoxes.Count; i++)
             {
-                if (CheckBox.IsChecked == true)
+                if (areaCheckBoxes[i].IsChecked == true)
                 {
                     App.context.AreaApplication.Add(new AreaApplication
                     {
-                        AreaID = AreaId,
-                        ApplicationID = applicationId
+                        ApplicationID = applicationId,
+                        AreaID = i + 1 // ID областей начинаются с 1
                     });
                 }
             }
+
             App.context.SaveChanges();
         }
 
         // Добавление выбранного оборудования в базу данных
         private void AddSelectedEquipment(int applicationId)
         {
-            // Словарь для связи чекбоксов с ID оборудования
-            var equipmentCheckboxes = new[]
+            var equipmentCheckBoxes = new List<CheckBox>
             {
-                (CheckBox: CameraCb, EquipmentId: 1),    // Видеонаблюдение
-                (CheckBox: SecurityCb, EquipmentId: 2),   // Система безопасности
-                (CheckBox: WaterCb, EquipmentId: 3),      // Контроль протечки воды
-                (CheckBox: CurtainCb, EquipmentId: 4),    // Управление шторами
-                (CheckBox: LightCb, EquipmentId: 5),      // Управление освещением
-                (CheckBox: HeatingCb, EquipmentId: 6)     // Управление отоплением
+                CameraCb, SecurityCb, WaterCb, CurtainCb, LightCb, HeatingCb
             };
 
-            foreach (var (CheckBox, EquipmentId) in equipmentCheckboxes)
+            // Сопоставляем чекбоксы с ID оборудования (по порядку как в базе)
+            for (int i = 0; i < equipmentCheckBoxes.Count; i++)
             {
-                if (CheckBox.IsChecked == true)
+                if (equipmentCheckBoxes[i].IsChecked == true)
                 {
                     App.context.EquipmentApplication.Add(new EquipmentApplication
                     {
-                        EquipmentID = EquipmentId,
-                        ApplicationID = applicationId
+                        ApplicationID = applicationId,
+                        EquipmentID = i + 1 // ID оборудования начинаются с 1
                     });
                 }
             }
-            App.context.SaveChanges();
-        }
 
-        // Связывание заявки с текущим пользователем
-        private void LinkApplicationToCurrentUser(int applicationId)
-        {
-            // Получаем ID текущего пользователя (здесь нужно реализовать логику получения текущего пользователя)
-            // В данном примере предполагаем, что ID пользователя хранится в статическом классе или свойствах приложения
-            int currentUserId = 1; // Замените на реальный способ получения ID текущего пользователя
-
-            // Находим максимальный ID в таблице UserApplication
-            int maxId = App.context.UserApplication.Any() ? App.context.UserApplication.Max(ua => ua.ID) : 0;
-
-            App.context.UserApplication.Add(new UserApplication
-            {
-                ID = maxId + 1,
-                UserID = currentUserId,
-                ApplicationID = applicationId
-            });
             App.context.SaveChanges();
         }
     }

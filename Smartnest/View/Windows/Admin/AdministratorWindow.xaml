@@ -82,12 +82,13 @@
                 <ListView x:Name="ApplicationLv" FontSize="24" Grid.Row="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="200"/>
-                            <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="120"/>
-                            <GridViewColumn Header="Услуги" DisplayMemberBinding="{Binding Areas}" Width="200"/>
-                            <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="200"/>
-                            <GridViewColumn Header="Квадратура" DisplayMemberBinding="{Binding ApartmentArea}" Width="100"/>
-                            <GridViewColumn Header="Комментарий" DisplayMemberBinding="{Binding Comment}" Width="300"/>
+                            <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="auto"/>
+                            <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="auto"/>
+                            <GridViewColumn Header="Услуги" DisplayMemberBinding="{Binding Areas}" Width="auto"/>
+                            <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="auto"/>
+                            <GridViewColumn Header="Квадратура" DisplayMemberBinding="{Binding ApartmentArea}" Width="auto"/>
+                            <GridViewColumn Header="Комментарий" DisplayMemberBinding="{Binding Comment}" Width="auto"/>
+                            <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Comment}" Width="auto"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
