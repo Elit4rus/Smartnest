@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище SmartnestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище SmartnestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Application">
           <Key>
             <PropertyRef Name="ID" />
@@ -168,62 +168,30 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartnestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="SmartnestEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Application" EntityType="SmartnestModel.Application" />
-          <EntitySet Name="Area" EntityType="SmartnestModel.Area" />
-          <EntitySet Name="AreaApplication" EntityType="SmartnestModel.AreaApplication" />
-          <EntitySet Name="Equipment" EntityType="SmartnestModel.Equipment" />
-          <EntitySet Name="EquipmentApplication" EntityType="SmartnestModel.EquipmentApplication" />
-          <EntitySet Name="Role" EntityType="SmartnestModel.Role" />
-          <EntitySet Name="User" EntityType="SmartnestModel.User" />
-          <AssociationSet Name="FK_Application_User" Association="SmartnestModel.FK_Application_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Application" EntitySet="Application" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AreaApplication_Application" Association="SmartnestModel.FK_AreaApplication_Application">
-            <End Role="Application" EntitySet="Application" />
-            <End Role="AreaApplication" EntitySet="AreaApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EquipmentApplication_Application" Association="SmartnestModel.FK_EquipmentApplication_Application">
-            <End Role="Application" EntitySet="Application" />
-            <End Role="EquipmentApplication" EntitySet="EquipmentApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AreaUser_Area" Association="SmartnestModel.FK_AreaUser_Area">
-            <End Role="Area" EntitySet="Area" />
-            <End Role="AreaApplication" EntitySet="AreaApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EquipmentUser_Equipment" Association="SmartnestModel.FK_EquipmentUser_Equipment">
-            <End Role="Equipment" EntitySet="Equipment" />
-            <End Role="EquipmentApplication" EntitySet="EquipmentApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="SmartnestModel.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Application">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApartmentArea" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ApartmentArea" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="SmartnestModel.FK_Application_User" FromRole="Application" ToRole="User" />
-          <NavigationProperty Name="AreaApplication" Relationship="SmartnestModel.FK_AreaApplication_Application" FromRole="Application" ToRole="AreaApplication" />
-          <NavigationProperty Name="EquipmentApplication" Relationship="SmartnestModel.FK_EquipmentApplication_Application" FromRole="Application" ToRole="EquipmentApplication" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Application_User" FromRole="Application" ToRole="User" />
+          <NavigationProperty Name="AreaApplication" Relationship="Self.FK_AreaApplication_Application" FromRole="Application" ToRole="AreaApplication" />
+          <NavigationProperty Name="EquipmentApplication" Relationship="Self.FK_EquipmentApplication_Application" FromRole="Application" ToRole="EquipmentApplication" />
         </EntityType>
         <EntityType Name="Area">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AreaApplication" Relationship="SmartnestModel.FK_AreaUser_Area" FromRole="Area" ToRole="AreaApplication" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AreaApplication" Relationship="Self.FK_AreaUser_Area" FromRole="Area" ToRole="AreaApplication" />
         </EntityType>
         <EntityType Name="AreaApplication">
           <Key>
@@ -232,16 +200,16 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AreaID" Type="Int32" Nullable="false" />
           <Property Name="ApplicationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Application" Relationship="SmartnestModel.FK_AreaApplication_Application" FromRole="AreaApplication" ToRole="Application" />
-          <NavigationProperty Name="Area" Relationship="SmartnestModel.FK_AreaUser_Area" FromRole="AreaApplication" ToRole="Area" />
+          <NavigationProperty Name="Application" Relationship="Self.FK_AreaApplication_Application" FromRole="AreaApplication" ToRole="Application" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_AreaUser_Area" FromRole="AreaApplication" ToRole="Area" />
         </EntityType>
         <EntityType Name="Equipment">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EquipmentApplication" Relationship="SmartnestModel.FK_EquipmentUser_Equipment" FromRole="Equipment" ToRole="EquipmentApplication" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EquipmentApplication" Relationship="Self.FK_EquipmentUser_Equipment" FromRole="Equipment" ToRole="EquipmentApplication" />
         </EntityType>
         <EntityType Name="EquipmentApplication">
           <Key>
@@ -250,34 +218,34 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="ApplicationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Application" Relationship="SmartnestModel.FK_EquipmentApplication_Application" FromRole="EquipmentApplication" ToRole="Application" />
-          <NavigationProperty Name="Equipment" Relationship="SmartnestModel.FK_EquipmentUser_Equipment" FromRole="EquipmentApplication" ToRole="Equipment" />
+          <NavigationProperty Name="Application" Relationship="Self.FK_EquipmentApplication_Application" FromRole="EquipmentApplication" ToRole="Application" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_EquipmentUser_Equipment" FromRole="EquipmentApplication" ToRole="Equipment" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="SmartnestModel.FK_User_Role" FromRole="Role" ToRole="User" />
+          <Property Name="Title" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Surname" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Patronymic" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Application" Relationship="SmartnestModel.FK_Application_User" FromRole="User" ToRole="Application" />
-          <NavigationProperty Name="Role" Relationship="SmartnestModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Application" Relationship="Self.FK_Application_User" FromRole="User" ToRole="Application" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
         </EntityType>
         <Association Name="FK_Application_User">
-          <End Type="SmartnestModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="SmartnestModel.Application" Role="Application" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Application" Type="Self.Application" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
@@ -288,8 +256,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AreaApplication_Application">
-          <End Type="SmartnestModel.Application" Role="Application" Multiplicity="1" />
-          <End Type="SmartnestModel.AreaApplication" Role="AreaApplication" Multiplicity="*" />
+          <End Role="Application" Type="Self.Application" Multiplicity="1" />
+          <End Role="AreaApplication" Type="Self.AreaApplication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Application">
               <PropertyRef Name="ID" />
@@ -300,8 +268,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EquipmentApplication_Application">
-          <End Type="SmartnestModel.Application" Role="Application" Multiplicity="1" />
-          <End Type="SmartnestModel.EquipmentApplication" Role="EquipmentApplication" Multiplicity="*" />
+          <End Role="Application" Type="Self.Application" Multiplicity="1" />
+          <End Role="EquipmentApplication" Type="Self.EquipmentApplication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Application">
               <PropertyRef Name="ID" />
@@ -312,8 +280,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AreaUser_Area">
-          <End Type="SmartnestModel.Area" Role="Area" Multiplicity="1" />
-          <End Type="SmartnestModel.AreaApplication" Role="AreaApplication" Multiplicity="*" />
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="AreaApplication" Type="Self.AreaApplication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Area">
               <PropertyRef Name="ID" />
@@ -324,8 +292,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EquipmentUser_Equipment">
-          <End Type="SmartnestModel.Equipment" Role="Equipment" Multiplicity="1" />
-          <End Type="SmartnestModel.EquipmentApplication" Role="EquipmentApplication" Multiplicity="*" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+          <End Role="EquipmentApplication" Type="Self.EquipmentApplication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipment">
               <PropertyRef Name="ID" />
@@ -336,8 +304,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Type="SmartnestModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="SmartnestModel.User" Role="User" Multiplicity="*" />
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="ID" />
@@ -347,7 +315,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="SmartnestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Application" EntityType="Self.Application" />
+          <EntitySet Name="Area" EntityType="Self.Area" />
+          <EntitySet Name="AreaApplication" EntityType="Self.AreaApplication" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" />
+          <EntitySet Name="EquipmentApplication" EntityType="Self.EquipmentApplication" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Application_User" Association="Self.FK_Application_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Application" EntitySet="Application" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaApplication_Application" Association="Self.FK_AreaApplication_Application">
+            <End Role="Application" EntitySet="Application" />
+            <End Role="AreaApplication" EntitySet="AreaApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentApplication_Application" Association="Self.FK_EquipmentApplication_Application">
+            <End Role="Application" EntitySet="Application" />
+            <End Role="EquipmentApplication" EntitySet="EquipmentApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaUser_Area" Association="Self.FK_AreaUser_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="AreaApplication" EntitySet="AreaApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentUser_Equipment" Association="Self.FK_EquipmentUser_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="EquipmentApplication" EntitySet="EquipmentApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -356,65 +357,65 @@
           <EntitySetMapping Name="Application">
             <EntityTypeMapping TypeName="SmartnestModel.Application">
               <MappingFragment StoreEntitySet="Application">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ApartmentArea" ColumnName="ApartmentArea" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ApartmentArea" ColumnName="ApartmentArea" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Area">
             <EntityTypeMapping TypeName="SmartnestModel.Area">
               <MappingFragment StoreEntitySet="Area">
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AreaApplication">
             <EntityTypeMapping TypeName="SmartnestModel.AreaApplication">
               <MappingFragment StoreEntitySet="AreaApplication">
-                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Equipment">
             <EntityTypeMapping TypeName="SmartnestModel.Equipment">
               <MappingFragment StoreEntitySet="Equipment">
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EquipmentApplication">
             <EntityTypeMapping TypeName="SmartnestModel.EquipmentApplication">
               <MappingFragment StoreEntitySet="EquipmentApplication">
-                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
-                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="SmartnestModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="SmartnestModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -434,7 +435,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
       </DesignerInfoPropertySet>
     </Options>

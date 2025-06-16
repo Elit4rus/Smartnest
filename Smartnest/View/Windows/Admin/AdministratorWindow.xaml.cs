@@ -1,4 +1,7 @@
-﻿using Smartnest.AppData;
+﻿using ClosedXML.Excel;
+using Microsoft.Win32;
+using Smartnest.AppData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -8,7 +11,7 @@ namespace Smartnest.View.Windows.Admin
     /// <summary>
     /// Логика взаимодействия для AdministratorWindow.xaml
     /// </summary>
-    public partial class AdministratorWindow : Window
+    public partial class AdministratorWindow : System.Windows.Window
     {
         private List<ApplicationView> applications = new List<ApplicationView>();
         public AdministratorWindow()
@@ -79,7 +82,68 @@ namespace Smartnest.View.Windows.Admin
 
         private void SendBtn_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Создаем диалог сохранения файла
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    FileName = $"Отчет_по_заявкам_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx",
+                    Title = "Сохранить отчет"
+                };
 
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    // Создаем новую книгу Excel
+                    using (var workbook = new XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Заявки");
+
+                        // Заголовки столбцов
+                        worksheet.Cell(1, 1).Value = "ФИО";
+                        worksheet.Cell(1, 2).Value = "Телефон";
+                        worksheet.Cell(1, 3).Value = "Области";
+                        worksheet.Cell(1, 4).Value = "Оборудование";
+                        worksheet.Cell(1, 5).Value = "Площадь (кв.м)";
+                        worksheet.Cell(1, 6).Value = "Комментарий";
+                        worksheet.Cell(1, 7).Value = "Дата создания";
+
+                        // Форматирование заголовков
+                        var headerRange = worksheet.Range("A1:G1");
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Fill.BackgroundColor = XLColor.LightGray;
+
+                        // Заполняем данные
+                        int row = 2;
+                        foreach (ApplicationView app in applications)
+                        {
+                            worksheet.Cell(row, 1).Value = app.FullName;
+                            worksheet.Cell(row, 2).Value = app.Phone;
+                            worksheet.Cell(row, 3).Value = app.Areas;
+                            worksheet.Cell(row, 4).Value = app.Equipment;
+                            worksheet.Cell(row, 5).Value = app.ApartmentArea;
+                            worksheet.Cell(row, 6).Value = app.Comment;
+                            worksheet.Cell(row, 7).Value = DateTime.Now.ToString("g");
+                            row++;
+                        }
+
+                        // Автоподбор ширины столбцов
+                        worksheet.Columns().AdjustToContents();
+
+                        // Сохраняем файл
+                        workbook.SaveAs(saveFileDialog.FileName);
+                    }
+
+                    MessageBox.Show($"Отчет успешно сохранен!\nПуть: {saveFileDialog.FileName}",
+                                    "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании отчета: {ex.Message}",
+                                "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ChangeBtn_Click(object sender, RoutedEventArgs e)
