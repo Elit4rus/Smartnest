@@ -108,8 +108,20 @@
     <Compile Include="View\Pages\Client\CameraPage.xaml.cs">
       <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Client\CurtainsPage.xaml.cs">
+      <DependentUpon>CurtainsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Client\HeatingPage.xaml.cs">
+      <DependentUpon>HeatingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Client\LightPage.xaml.cs">
+      <DependentUpon>LightPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\Client\SecurityPage.xaml.cs">
       <DependentUpon>SecurityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Client\WaterPage.xaml.cs">
+      <DependentUpon>WaterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\Admin\AdministratorWindow.xaml.cs">
       <DependentUpon>AdministratorWindow.xaml</DependentUpon>
@@ -154,7 +166,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Pages\Client\CurtainsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\Client\HeatingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\Client\LightPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Pages\Client\SecurityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\Client\WaterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -259,6 +287,20 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Logo\Heating\Рисунок13.png" />
+    <Resource Include="Resources\Logo\Heating\Рисунок14.png" />
+    <Resource Include="Resources\Logo\Heating\Рисунок15.png" />
+    <Resource Include="Resources\Logo\Water\Рисунок10.png" />
+    <Resource Include="Resources\Logo\Water\Рисунок11.png" />
+    <Resource Include="Resources\Logo\Water\Рисунок12.png" />
+    <Resource Include="Resources\Logo\Water\Рисунок9.png" />
+    <Resource Include="Resources\Logo\Curtains\Рисунок5.png" />
+    <Resource Include="Resources\Logo\Curtains\Рисунок6.png" />
+    <Resource Include="Resources\Logo\Curtains\Рисунок7.png" />
+    <Resource Include="Resources\Logo\Curtains\Рисунок8.png" />
+    <Resource Include="Resources\Logo\Light\Рисунок2.png" />
+    <Resource Include="Resources\Logo\Light\Рисунок3.png" />
+    <Resource Include="Resources\Logo\Light\Рисунок4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

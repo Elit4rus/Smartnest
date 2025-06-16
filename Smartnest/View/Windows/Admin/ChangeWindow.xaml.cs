@@ -57,35 +57,55 @@ namespace Smartnest.View.Windows.Admin
                 .Select(aa => aa.AreaID)
                 .ToList();
 
-            // Устанавливаем чекбоксы областей
-            SetCheckBoxes(areaIds, new List<CheckBox>
-            {
-                KitchenCb, HallwayCb, LivingRoomCb, AtelierCb,
-                BathroomCb, ToiletCb, BedroomCb, BasementCb,
-                BalconyCb, DressingRoomCb, YardCb, RoofCb
-            }, App.context.Area.ToList());
-
             // Получаем выбранное оборудование для заявки
             var equipmentIds = App.context.EquipmentApplication
                 .Where(ea => ea.ApplicationID == applicationId)
                 .Select(ea => ea.EquipmentID)
                 .ToList();
 
+            // Устанавливаем чекбоксы областей
+            SetCheckBoxes(
+                areaIds,
+                new List<CheckBox> {
+            KitchenCb, HallwayCb, LivingRoomCb, AtelierCb,
+            BathroomCb, ToiletCb, BedroomCb, BasementCb,
+            BalconyCb, DressingRoomCb, YardCb, RoofCb
+                },
+                App.context.Area.ToList()
+            );
+
             // Устанавливаем чекбоксы оборудования
-            SetCheckBoxes(equipmentIds, new List<CheckBox>
+            SetCheckBoxes(
+                equipmentIds,
+                new List<CheckBox> {
+            CameraCb, SecurityCb, WaterCb, CurtainCb, LightCb, HeatingCb
+                },
+                App.context.Equipment.ToList()
+            );
+        }
+
+        private void SetCheckBoxes(List<int> selectedIds, List<CheckBox> checkBoxes, List<Equipment> equipments)
+        {
+            for (int i = 0; i < checkBoxes.Count; i++)
             {
-                CameraCb, SecurityCb, WaterCb, CurtainCb, LightCb, HeatingCb
-            }, App.context.Equipment.ToList());
+                if (i < equipments.Count)
+                {
+                    checkBoxes[i].Tag = equipments[i].ID; // Сохраняем ID в Tag
+                    checkBoxes[i].IsChecked = selectedIds.Contains(equipments[i].ID);
+                }
+            }
         }
 
-        private void SetCheckBoxes(List<int> equipmentIds, List<CheckBox> checkBoxes, List<Equipment> equipment)
+        private void SetCheckBoxes(List<int> selectedIds, List<CheckBox> checkBoxes, List<Area> areas)
         {
-            throw new NotImplementedException();
-        }
-
-        private void SetCheckBoxes(List<int> areaIds, List<CheckBox> checkBoxes, List<Area> areas)
-        {
-            throw new NotImplementedException();
+            for (int i = 0; i < checkBoxes.Count; i++)
+            {
+                if (i < areas.Count)
+                {
+                    checkBoxes[i].Tag = areas[i].ID; // Сохраняем ID в Tag
+                    checkBoxes[i].IsChecked = selectedIds.Contains(areas[i].ID);
+                }
+            }
         }
 
         // Метод для установки состояния чекбоксов
@@ -113,7 +133,7 @@ namespace Smartnest.View.Windows.Admin
                 // Обновляем данные пользователя
                 if (currentUser != null)
                 {
-                    var nameParts = FullnameTb.Text.Split(new[] { ' ' }, 3);
+                    var nameParts = FullnameTb.Text.Split(new[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
                     currentUser.Surname = nameParts.Length > 0 ? nameParts[0] : "";
                     currentUser.Name = nameParts.Length > 1 ? nameParts[1] : "";
                     currentUser.Patronymic = nameParts.Length > 2 ? nameParts[2] : null;
@@ -124,19 +144,9 @@ namespace Smartnest.View.Windows.Admin
                 currentApplication.ApartmentArea = AreaTb.Text;
                 currentApplication.Comment = CommentTb.Text;
 
-                // Обновляем выбранные области
-                UpdateSelectedItems(
-                    App.context.AreaApplication.Where(aa => aa.ApplicationID == applicationId).ToList(),
-                    new List<CheckBox> { KitchenCb, HallwayCb, LivingRoomCb, AtelierCb, BathroomCb,
-                                       ToiletCb, BedroomCb, BasementCb, BalconyCb, DressingRoomCb,
-                                       YardCb, RoofCb },
-                    (areaId) => new AreaApplication { ApplicationID = applicationId, AreaID = areaId });
-
-                // Обновляем выбранное оборудование
-                UpdateSelectedItems(
-                    App.context.EquipmentApplication.Where(ea => ea.ApplicationID == applicationId).ToList(),
-                    new List<CheckBox> { CameraCb, SecurityCb, WaterCb, CurtainCb, LightCb, HeatingCb },
-                    (equipmentId) => new EquipmentApplication { ApplicationID = applicationId, EquipmentID = equipmentId });
+                // Обновляем связи
+                UpdateAreaApplications();
+                UpdateEquipmentApplications();
 
                 // Сохраняем изменения
                 App.context.SaveChanges();
@@ -145,42 +155,78 @@ namespace Smartnest.View.Windows.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении: {ex.Message}");
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}\n\n{ex.InnerException?.Message}");
             }
         }
 
-        // Метод для обновления выбранных элементов(областей или оборудования)
-        private void UpdateSelectedItems<T>(List<T> existingItems, List<CheckBox> checkBoxes, Func<int, T> createNewItem) where T : class
+        private void UpdateAreaApplications()
         {
-            // Удаляем невыбранные элементы
-            for (int i = existingItems.Count - 1; i >= 0; i--)
-            {
-                dynamic item = existingItems[i];
-                int id = item.AreaID ?? item.EquipmentID; // Теперь это будет работать
+            // Получаем все существующие связи
+            var existingAreas = App.context.AreaApplication
+                .Where(aa => aa.ApplicationID == applicationId)
+                .ToList();
 
-                var correspondingCheckBox = checkBoxes.FirstOrDefault(cb => (int)cb.Tag == id);
-                if (correspondingCheckBox == null || !correspondingCheckBox.IsChecked.Value)
-                {
-                    App.context.Set<T>().Remove(existingItems[i]);
-                    existingItems.RemoveAt(i);
-                }
+            // Удаляем каждую связь по отдельности
+            foreach (var area in existingAreas)
+            {
+                App.context.AreaApplication.Remove(area);
             }
 
-            // Добавляем новые выбранные элементы
-            foreach (var checkBox in checkBoxes.Where(cb => cb.IsChecked.Value))
+            // Список всех чекбоксов областей
+            var areaCheckBoxes = new List<CheckBox>
+    {
+        KitchenCb, HallwayCb, LivingRoomCb, AtelierCb,
+        BathroomCb, ToiletCb, BedroomCb, BasementCb,
+        BalconyCb, DressingRoomCb, YardCb, RoofCb
+    };
+
+            // Добавляем новые выбранные связи
+            foreach (var cb in areaCheckBoxes)
             {
-                int id = (int)checkBox.Tag;
-                if (!existingItems.Any(item =>
+                if (cb.IsChecked == true && cb.Tag != null)
                 {
-                    dynamic dynItem = item;
-                    return (dynItem.AreaID == id) || (dynItem.EquipmentID == id);
-                }))
-                {
-                    var newItem = createNewItem(id);
-                    App.context.Set<T>().Add(newItem);
+                    int areaId = (int)cb.Tag;
+                    App.context.AreaApplication.Add(new AreaApplication
+                    {
+                        ApplicationID = applicationId,
+                        AreaID = areaId
+                    });
                 }
             }
         }
 
+        private void UpdateEquipmentApplications()
+        {
+            // Получаем все существующие связи
+            var existingEquipment = App.context.EquipmentApplication
+                .Where(ea => ea.ApplicationID == applicationId)
+                .ToList();
+
+            // Удаляем каждую связь по отдельности
+            foreach (var equipment in existingEquipment)
+            {
+                App.context.EquipmentApplication.Remove(equipment);
+            }
+
+            // Список всех чекбоксов оборудования
+            var equipmentCheckBoxes = new List<CheckBox>
+    {
+        CameraCb, SecurityCb, WaterCb, CurtainCb, LightCb, HeatingCb
+    };
+
+            // Добавляем новые выбранные связи
+            foreach (var cb in equipmentCheckBoxes)
+            {
+                if (cb.IsChecked == true && cb.Tag != null)
+                {
+                    int equipmentId = (int)cb.Tag;
+                    App.context.EquipmentApplication.Add(new EquipmentApplication
+                    {
+                        ApplicationID = applicationId,
+                        EquipmentID = equipmentId
+                    });
+                }
+            }
+        }
     }
 }

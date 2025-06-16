@@ -91,13 +91,9 @@ namespace Smartnest.View.Windows.Admin
             }
 
             var selectedApp = (ApplicationView)ApplicationLv.SelectedItem;
-
-            // Открываем окно редактирования с передачей выбранной заявки
             ChangeWindow changeWindow = new ChangeWindow(selectedApp.ID);
+            changeWindow.Closed += (s, args) => LoadApplications(); // Обновляем при закрытии
             changeWindow.ShowDialog();
-
-            // Обновляем список после закрытия окна редактирования
-            LoadApplications();
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)

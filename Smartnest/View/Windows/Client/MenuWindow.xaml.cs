@@ -39,22 +39,22 @@ namespace Smartnest.View.Windows.Client
 
         private void WaterLeakageControlWindowBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            ClientFrame.Navigate(new View.Pages.Client.WaterPage());
         }
 
         private void CurtainControlWindowBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            ClientFrame.Navigate(new View.Pages.Client.CurtainsPage());
         }
 
         private void ControlLightingWindowBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            ClientFrame.Navigate(new View.Pages.Client.LightPage());
         }
 
         private void ManageHeatingWindowBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            ClientFrame.Navigate(new View.Pages.Client.HeatingPage());
         }
     }
 }
